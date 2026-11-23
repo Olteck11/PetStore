@@ -41,6 +41,7 @@ sourceSets {
             res.srcDirs("layout")
         }
     }
+}
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
