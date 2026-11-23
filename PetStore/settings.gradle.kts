@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PetStore"
 include(":app")
-project(":app").projectDir = file("PetStore")
+project(":app").projectDir = file("PetStore/PetStore")
