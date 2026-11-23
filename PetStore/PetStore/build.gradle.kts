@@ -38,7 +38,7 @@ sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
             kotlin.srcDirs("adapter", "model")
-            res.srcDirs("layout")
+            res.srcDirs(".")
         }
     }
 }
