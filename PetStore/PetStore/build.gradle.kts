@@ -35,14 +35,12 @@ android {
     }
 
 sourceSets {
-        getByName("main") {
-            manifest.srcFile("AndroidManifest.xml")
-            kotlin.srcDirs(".")
-            kotlin.setExcludes(setOf("build/**"))
-            res.srcDirs(".")
-            res.setExcludes(setOf("build/**"))
-        }
+    getByName("main") {
+        manifest.srcFile("AndroidManifest.xml")
+        kotlin.srcDirs(".", "adapter", "model")
+        res.srcDirs("layout", "media")
     }
+}
 }
 
 dependencies {
