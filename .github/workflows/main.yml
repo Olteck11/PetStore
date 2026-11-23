@@ -33,19 +33,18 @@ jobs:
         with:
           gradle-version: "8.7"
 
-      - name: Generate Gradle Wrapper if missing
+      - name: Generate Gradle Wrapper and Assemble Debug APK
+        working-directory: PetStore
         run: |
           if [ ! -f "./gradlew" ]; then
             gradle wrapper --gradle-version 8.7
           fi
           chmod +x ./gradlew
-
-      - name: Assemble Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: PetStore-debug-apk
-          path: PetStore/build/outputs/apk/debug/*.apk
+          path: PetStore/PetStore/build/outputs/apk/debug/*.apk
