@@ -34,17 +34,15 @@ android {
         jvmTarget = "17"
     }
 
-    sourceSets {
+sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
-            kotlin.srcDirs(".") {
-                exclude("build/**")
-            }
-            res.srcDirs(".") {
-                exclude("build/**")
+            kotlin.srcDirs(".")
+            kotlin.filter.exclude("build/**")
+            res.srcDirs(".")
+            res.filter.exclude("build/**")
         }
     }
-}
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
