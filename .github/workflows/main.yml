@@ -33,8 +33,17 @@ jobs:
         with:
           gradle-version: "8.7"
 
-      - name: Generate Gradle Wrapper and Assemble Debug APK
+      - name: Locate Gradle root and Assemble Debug APK
         run: |
+          SETTINGS_FILE=$(find . -maxdepth 5 \( -name "settings.gradle" -o -name "settings.gradle.kts" \) | head -n 1)
+          if [ -z "$SETTINGS_FILE" ]; then
+            echo "No se encontró settings.gradle ni settings.gradle.kts en el repositorio."
+            find . -maxdepth 4 -not -path '*/.*'
+            exit 1
+          fi
+          GRADLE_DIR=$(dirname "$SETTINGS_FILE")
+          echo "Usando directorio Gradle: $GRADLE_DIR"
+          cd "$GRADLE_DIR"
           if [ ! -f "./gradlew" ]; then
             gradle wrapper --gradle-version 8.7
           fi
