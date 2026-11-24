@@ -37,7 +37,7 @@ jobs:
         run: |
           SETTINGS_FILE=$(find . -maxdepth 5 \( -name "settings.gradle" -o -name "settings.gradle.kts" \) | head -n 1)
           if [ -z "$SETTINGS_FILE" ]; then
-            echo "No se encontró settings.gradle ni settings.gradle.kts en el repositorio."
+            echo "No se encontro settings.gradle ni settings.gradle.kts en el repositorio."
             exit 1
           fi
           GRADLE_DIR=$(dirname "$SETTINGS_FILE")
@@ -50,16 +50,14 @@ jobs:
           if [ -n "$EXISTING_MANIFEST" ] && [ "$EXISTING_MANIFEST" != "$TARGET_MANIFEST" ]; then
             cp "$EXISTING_MANIFEST" "$TARGET_MANIFEST"
           elif [ ! -f "$TARGET_MANIFEST" ]; then
-            cat << 'EOF' > "$TARGET_MANIFEST"
-<?xml version="1.0" encoding="utf-8"?>
+            python3 -c '
+manifest = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
     <application
         android:allowBackup="true"
         android:label="PetStore"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar">
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -68,11 +66,12 @@ jobs:
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
-
 </manifest>
-EOF
+"""
+with open("/home/runner/work/PetStore/PetStore/PetStore/PetStore/AndroidManifest.xml", "w", encoding="utf-8") as f:
+    f.write(manifest)
+'
           fi
 
           cd "$GRADLE_DIR"
